@@ -1,0 +1,68 @@
+//thread que recebe mensagem do servidor
+//thread que recebe as mensagens da linha de comando
+
+public class implements Runnable{
+    private socket client;
+    private BufferedReader in;
+    private PrintWriter out;
+    private boolean ok;
+    @override
+    public void run(){
+        try {
+            socket client = new socket("127.0.0.1",9999);//passar o indereço ip, localmente, locahost + porta 9999 
+            out=new PrintWriter(client.getOutputStream(), true);
+            in = new BufferedReader(InputStreamReader(client.getInputStream())); 
+            inputHospedeiro inhandler= new inputHospedeiro();
+            thread x=new Thread(inHospedeiro)
+            x.start();
+            
+            string inMensage;
+            while((inMensage=in.readLine())!=null){
+                System.out.println(inMensage);
+            }
+
+        } catch (IOException e) {
+            desligar();
+        }
+    }
+
+public void desligar(){
+    ok = true;
+    try {
+        in.close();
+        ou.close();
+        if (!client.isClosed){
+            client.close();
+        }
+    } catch (IOException e) {
+       
+    }
+}
+class inputHospedeiro implements Runnable{
+@override
+public void run(){
+    try {
+        BufferedReader inReader= newBufferedReader(new InputStreamReader(System.in));
+        //enquanto nao tiver pronto sera necessario
+        while(!ok){
+            String message= inReader.readLine();
+            if(message.equals("/sair")){
+                inReader.close();
+                desligar();
+
+            }else {
+                out.println(mensage);
+
+            }
+        } 
+    } catch (Exception e) {
+        desligar();
+        
+    }
+}
+}
+}
+public static void main(String[]args){
+    client client =new client();
+    client.run();
+}
